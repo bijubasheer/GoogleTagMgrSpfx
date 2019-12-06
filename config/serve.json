@@ -6,7 +6,7 @@
     "default": {
       "pageUrl": "https://contoso.sharepoint.com/sites/mySite/SitePages/myPage.aspx",
       "customActions": {
-        "83cd8002-d966-45e5-895d-e1d3abd04981": {
+        "87dac560-8541-4aef-b094-39b0a0d73985": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
             "testMessage": "Test message"
@@ -14,10 +14,10 @@
         }
       }
     },
-    "googleTagManagerForSharePoint": {
+    "gtm": {
       "pageUrl": "https://contoso.sharepoint.com/sites/mySite/SitePages/myPage.aspx",
       "customActions": {
-        "83cd8002-d966-45e5-895d-e1d3abd04981": {
+        "87dac560-8541-4aef-b094-39b0a0d73985": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
             "testMessage": "Test message"

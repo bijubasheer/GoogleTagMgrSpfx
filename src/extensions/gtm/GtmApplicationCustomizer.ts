@@ -5,23 +5,22 @@ import {
 } from '@microsoft/sp-application-base';
 import { Dialog } from '@microsoft/sp-dialog';
 
-import * as strings from 'GoogleTagManagerForSharePointApplicationCustomizerStrings';
+import * as strings from 'GtmApplicationCustomizerStrings';
 
-const LOG_SOURCE: string = 'GoogleTagManagerForSharePointApplicationCustomizer';
+const LOG_SOURCE: string = 'GtmApplicationCustomizer';
 
 /**
  * If your command set uses the ClientSideComponentProperties JSON input,
  * it will be deserialized into the BaseExtension.properties object.
  * You can define an interface to describe it.
  */
-export interface IGoogleTagManagerForSharePointApplicationCustomizerProperties {
+export interface IGtmApplicationCustomizerProperties {
   // This is an example; replace with your own property
   testMessage: string;
 }
 
 /** A Custom Action which can be run during execution of a Client Side Application */
-export default class GoogleTagManagerForSharePointApplicationCustomizer
-  extends BaseApplicationCustomizer<IGoogleTagManagerForSharePointApplicationCustomizerProperties> {
+export default class GtmApplicationCustomizer extends BaseApplicationCustomizer<IGtmApplicationCustomizerProperties> {
 
   @override
   public onInit(): Promise<void> {
