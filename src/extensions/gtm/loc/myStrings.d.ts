@@ -1,5 +1,5 @@
 declare interface IGtmApplicationCustomizerStrings {
-  Title: string;
+  MissingID: string;
 }
 
 declare module 'GtmApplicationCustomizerStrings' {

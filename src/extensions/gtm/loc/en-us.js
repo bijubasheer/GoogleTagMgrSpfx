@@ -1,5 +1,5 @@
 define([], function() {
   return {
-    "Title": "GtmApplicationCustomizer"
+    "MissingID": "Tracking ID of Google Tag Manager is not provide"
   }
 });

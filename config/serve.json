@@ -3,13 +3,14 @@
   "port": 4321,
   "https": true,
   "serveConfigurations": {
+    // ?loadSPFX=true&debugManifestsFile=https://localhost:4321/temp/manifest.js&customActions={"87dac560-8541-4aef-b094-39b0a0d73985":{"location":"ClientSideExtension.ApplicationCustomizer","properties":{"trackingID":"GTM-WD2MNT5"}}}
     "default": {
       "pageUrl": "https://contoso.sharepoint.com/sites/mySite/SitePages/myPage.aspx",
       "customActions": {
         "87dac560-8541-4aef-b094-39b0a0d73985": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
-            "testMessage": "Test message"
+            "trackingID": "GTM-XXXXXXX"
           }
         }
       }
@@ -20,7 +21,7 @@
         "87dac560-8541-4aef-b094-39b0a0d73985": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
-            "testMessage": "Test message"
+            "trackingID": "GTM-XXXXXXX"
           }
         }
       }

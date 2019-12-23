@@ -4,6 +4,6 @@
         Title="Gtm"
         Location="ClientSideExtension.ApplicationCustomizer"
         ComponentId="87dac560-8541-4aef-b094-39b0a0d73985"
-        Properties="{&quot;testMessage&quot;:&quot;Test message&quot;}">
+        Properties="{&quot;trackingID&quot;:&quot;GTM-XXXXXXX&quot;}">
     </ClientSideComponentInstance>
 </Elements>
