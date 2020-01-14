@@ -1,6 +1,6 @@
 # Google Tag Manager for SharePoint
 
-xFx Extension to implement Google Tag Manager solution.
+SPFx Extension to implement Google Tag Manager solution.
 
 This solution provide the solution with the latest version of SharePoint Framework and all scripts to install and deploy the solution to your environment.
 
@@ -32,22 +32,22 @@ This solution provide the solution with the latest version of SharePoint Framewo
 #### Examples
 
 ```powershell
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-XXXXXXX'
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000'
 ```
 In this example, deploy the solution package to the Site Collection App Catalog
 
 ```powershell
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-XXXXXXX' -tenantSolutionDeployment
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000' -tenantSolutionDeployment
 ```
 In this example, deploy the solution package to the Tenant App Catalog
 
 ```powershell
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-XXXXXXX' -checkPoint 300
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000' -checkPoint 300
 ```
 In this example, enable the custom action the target site collection only
 
 ```powershell
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-XXXXXXX' -skipCustomAction
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000' -skipCustomAction
 ```
 In this example, deploy and install the package only (the custom action will be not enabled)
 
@@ -88,21 +88,21 @@ In this example, deploy and install the package only (the custom action will be 
 #### Examples
 
 ```bash
-./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-XXXXXXX'
+./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-UMA0000'
 ```
 In this example, deploy the solution package to the Site Collection App Catalog
 
 ```bash
-./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-XXXXXXX' --tenantSolutionDeployment
+./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-UMA0000' --tenantSolutionDeployment
 ```
 In this example, deploy the solution package to the Tenant App Catalog
 
 ```bash
-./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-XXXXXXX' --checkPoint 300
+./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-UMA0000' --checkPoint 300
 ```
 In this example, enable the custom action the target site collection only
 
 ```bash
-./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-XXXXXXX' --skipCustomAction
+./setup.sh --siteUrl https://contoso.sharepoint.com/sites/target-site --trackingID 'GTM-UMA0000' --skipCustomAction
 ```
 In this example, deploy and install the package only (the custom action will be not enabled)
