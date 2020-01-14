@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
     <ClientSideComponentInstance
-        Title="GoogleTagManagerForSharePoint"
+        Title="Gtm"
         Location="ClientSideExtension.ApplicationCustomizer"
-        ComponentId="83cd8002-d966-45e5-895d-e1d3abd04981"
-        Properties="{&quot;testMessage&quot;:&quot;Test message&quot;}">
+        ComponentId="87dac560-8541-4aef-b094-39b0a0d73985"
+        Properties="{&quot;trackingID&quot;:&quot;GTM-XXXXXXX&quot;}">
     </ClientSideComponentInstance>
 </Elements>

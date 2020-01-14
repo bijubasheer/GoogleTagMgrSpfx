@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-extension-manifest.schema.json",
 
-  "id": "83cd8002-d966-45e5-895d-e1d3abd04981",
-  "alias": "GoogleTagManagerForSharePointApplication",
+  "id": "87dac560-8541-4aef-b094-39b0a0d73985",
+  "alias": "GtmApplicationCustomizer",
   "componentType": "Extension",
   "extensionType": "ApplicationCustomizer",
 

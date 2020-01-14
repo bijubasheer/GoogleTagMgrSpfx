@@ -2,17 +2,17 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
   "version": "2.0",
   "bundles": {
-    "google-tag-manager-for-share-point-application-customizer": {
+    "gtm-application-customizer": {
       "components": [
         {
-          "entrypoint": "./lib/extensions/googleTagManagerForSharePoint/GoogleTagManagerForSharePointApplicationCustomizer.js",
-          "manifest": "./src/extensions/googleTagManagerForSharePoint/GoogleTagManagerForSharePointApplicationCustomizer.manifest.json"
+          "entrypoint": "./lib/extensions/gtm/GtmApplicationCustomizer.js",
+          "manifest": "./src/extensions/gtm/GtmApplicationCustomizer.manifest.json"
         }
       ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "GoogleTagManagerForSharePointApplicationCustomizerStrings": "lib/extensions/googleTagManagerForSharePoint/loc/{locale}.js"
+    "GtmApplicationCustomizerStrings": "lib/extensions/gtm/loc/{locale}.js"
   }
 }

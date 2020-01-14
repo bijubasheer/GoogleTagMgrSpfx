@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "google-tag-manager-for-share-point-client-side-solution",
-    "id": "233c1ac4-c2dd-40d8-bc70-448986b38d43",
+    "name": "Google Tag Manager for SharePoint",
+    "id": "bedd43fd-5e37-4443-bdf0-b9abeed33774",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
@@ -11,7 +11,7 @@
       {
         "title": "Application Extension - Deployment of custom action.",
         "description": "Deploys a custom action with ClientSideComponentId association",
-        "id": "41f9a6e9-d00c-44bc-a9cf-37411c252ef3",
+        "id": "b58b997d-54b9-4768-a558-6953bf13f055",
         "version": "1.0.0.0",
         "assets": {
           "elementManifests": [
@@ -23,6 +23,6 @@
     ]
   },
   "paths": {
-    "zippedPackage": "solution/google-tag-manager-for-share-point.sppkg"
+    "zippedPackage": "solution/gtm-for-sharepoint.sppkg"
   }
 }
