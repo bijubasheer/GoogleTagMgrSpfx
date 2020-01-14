@@ -1,3 +1,12 @@
+## [0.0.2](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/compare/v0.0.1...v0.0.2) (2020-01-14)
+
+
+### Features
+
+* **doc:** update documentation and rename clientsiteinstance ([7ca0bd2](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/commit/7ca0bd29105105a26c77c476be42686eb99cd34f))
+
+
+
 ## 0.0.1 (2020-01-14)
 
 
