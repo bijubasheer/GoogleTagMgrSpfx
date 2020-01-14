@@ -6,21 +6,21 @@ Deploy and install Google Tag Manager to your Modern SharePoint Site Collection
 With this script, you can deploy the Google Tag Manager to the Site Collection catalog or the whole Tenant and enable the custom action to the target site collection.
 
 .EXAMPLE
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'UA-000000000-1'
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000'
 
 .EXAMPLE
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'UA-000000000-1' -tenantSolutionDeployment
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000' -tenantSolutionDeployment
 
 .EXAMPLE
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'UA-000000000-1' -checkPoint 300
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000' -checkPoint 300
 
 .EXAMPLE
-.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'UA-000000000-1' -skipCustomAction
+.\setup.ps1 -siteUrl https://contoso.sharepoint.com/sites/target-site -trackingID 'GTM-UMA0000' -skipCustomAction
 
 .NOTES
 	Version		: 1.0.0.0
     File Name   : setup.ps1
-    Author      : Laurent Sittler - laurent.sittler@lsonline.fr
+    Author      : Laurent Sittler - laurent@umaknow.com
 
 .LINK
 https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm
@@ -32,7 +32,7 @@ Param(
     [Parameter(Mandatory=$true, HelpMessage="URL of the site to provision and/or enable the extension, e.g. 'https://contoso.sharepoint.com/sites/target-site'")]
     [string]$siteUrl,
 
-    [Parameter(Mandatory=$true, HelpMessage="Google Tag Manager Tracking ID, e.g. 'GTM-0000000'")]
+    [Parameter(Mandatory=$true, HelpMessage="Google Tag Manager Tracking ID, e.g. 'GTM-UMA0000'")]
     [string]$trackingID,
 
     [Parameter(Mandatory=$false, HelpMessage="Define to deploy the solution package to the whole tenant. If not specified, the package will be deployed to the current Site App Catalog")]
@@ -89,7 +89,7 @@ If ($tenantSolutionDeployment) {
     If ($checkPoint -lt 100) {
         Write-Verbose "Adding the Google tag Manager Package to the Tenant AppCatalog..."
 
-        $app = Add-PnPApp -Path $package
+        $app = Add-PnPApp -Path $package -SkipFeatureDeployment
         $appId = $app.Id
 
         Write-Verbose "App ID: $appId"
