@@ -1,9 +1,6 @@
 import { override } from '@microsoft/decorators';
 import { Log } from '@microsoft/sp-core-library';
-import {
-  BaseApplicationCustomizer
-} from '@microsoft/sp-application-base';
-import { Dialog } from '@microsoft/sp-dialog';
+import { BaseApplicationCustomizer } from '@microsoft/sp-application-base';
 
 import * as strings from 'GtmApplicationCustomizerStrings';
 
@@ -15,46 +12,45 @@ const LOG_SOURCE: string = 'GtmApplicationCustomizer';
  * You can define an interface to describe it.
  */
 export interface IGtmApplicationCustomizerProperties {
-  // This is an example; replace with your own property
   trackingID: string;
 }
 
 /** A Custom Action which can be run during execution of a Client Side Application */
 export default class GtmApplicationCustomizer extends BaseApplicationCustomizer<IGtmApplicationCustomizerProperties> {
 
-  private currentPage = "";
-
+  /**
+   * Ensuring the script is load only once
+   * @property
+   * @private
+   */
   private isInitialLoad: boolean = true;
 
-  private isEventLoaded: boolean = false;
-
-  private getFreshCurrentPage(): string {
-    return window.location.pathname + window.location.search;
-  }
-
-  private updateCurrentPage(): void {
-    this.currentPage = this.getFreshCurrentPage();
-  }
-
+  /**
+   * Default function loaded by the extension
+   * @private
+   */
   private navigatedEvent(): void {
     let trackingID: string = this.properties.trackingID;
     if (!trackingID) {
-      Log.info(LOG_SOURCE,`${strings.MissingID}`);
+      Log.info(LOG_SOURCE, `${strings.MissingID}`);
     } else {
-      Log.info(LOG_SOURCE,`Tracking Site ID: ${trackingID}`);
+      Log.info(LOG_SOURCE, `Tracking Site ID: ${trackingID}`);
 
       if (this.isInitialLoad) {
-        Log.info(LOG_SOURCE,`Initial load`);
+        Log.info(LOG_SOURCE, `Initial load`);
         this.realInitialNavigatedEvent(trackingID);
         this.isInitialLoad = false;
-        this.updateCurrentPage();
-        this.isEventLoaded = true;
       }
     }
   }
 
+  /**
+   * Google Tag Manager injection script and custom JavaScript function `refreshGTMDatalayer` for partial or custom load event
+   * @param trackingID Google Tag Manager unique ID
+   * @private
+   */
   private realInitialNavigatedEvent(trackingID: string): void {
-    Log.info(LOG_SOURCE,`Tracking full page load...`);
+    Log.info(LOG_SOURCE, `Tracking full page load...`);
 
     var gtagScript = document.createElement("script");
     gtagScript.type = "text/javascript";
@@ -72,7 +68,7 @@ export default class GtmApplicationCustomizer extends BaseApplicationCustomizer<
       function refreshGTMDatalayer(dl) {
         Log.info(LOG_SOURCE,'Info: refreshGTMDatalayer');
         window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push(dl);
+        window.dataLayer.push(dl);
       }
     `;
     document.head.appendChild(gtagScript);
@@ -86,17 +82,11 @@ export default class GtmApplicationCustomizer extends BaseApplicationCustomizer<
     document.body.appendChild(gtagBody);
   }
 
-  private partialTest(): void {
-    Log.info(LOG_SOURCE,'Info: partialTest');
-  }
-
   @override
   public onInit(): Promise<void> {
 
-    Log.info(LOG_SOURCE,`Initialized Google Analytics`);
+    Log.info(LOG_SOURCE, `Initialized Google Analytics`);
 
-    /* This event is triggered when user performed a search from the header of SharePoint */
-    this.context.placeholderProvider.changedEvent.add(this, this.partialTest);
     /* This event is triggered when user navigate between the pages */
     this.context.application.navigatedEvent.add(this, this.navigatedEvent);
 
