@@ -1,3 +1,19 @@
+## [0.0.3](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/compare/v0.0.2...v0.0.3) (2020-01-20)
+
+
+### Bug Fixes
+
+* partial loading page ([0d58f79](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/commit/0d58f796b7144e8129360ec79350c6820d37312d))
+* **setup:** rename functions file for bash install ([7224e0f](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/commit/7224e0fcb0cc58648c67fc28e1e601d6abbbd65a))
+
+
+### Features
+
+* remove auto-deploy custom action to avoid doublon ([e235d02](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/commit/e235d02eac70583d085921d41eb7897e236ac598))
+* update version ([10f028b](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/commit/10f028b7fbaaff558fed187bf8bc90730933e920))
+
+
+
 ## [0.0.2](https://gitlab.lsonline.fr/SharePoint/sp-dev-fx-webparts/gtm/compare/v0.0.1...v0.0.2) (2020-01-14)
 
 
