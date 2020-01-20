@@ -3,7 +3,7 @@
   "solution": {
     "name": "Google Tag Manager for SharePoint",
     "id": "bedd43fd-5e37-4443-bdf0-b9abeed33774",
-    "version": "1.0.0.0",
+    "version": "1.0.0.3",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -12,7 +12,7 @@
         "title": "Application Extension - Deployment of custom action.",
         "description": "Deploys a custom action with ClientSideComponentId association",
         "id": "b58b997d-54b9-4768-a558-6953bf13f055",
-        "version": "1.0.0.0",
+        "version": "1.0.0.3",
         "assets": {
           "elementManifests": [
             "elements.xml",
