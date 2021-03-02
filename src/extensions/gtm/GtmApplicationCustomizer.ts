@@ -1,142 +1,156 @@
 import { override } from '@microsoft/decorators';
 import { Log } from '@microsoft/sp-core-library';
-import { BaseApplicationCustomizer } from '@microsoft/sp-application-base';
-
+import {
+  BaseApplicationCustomizer
+} from '@microsoft/sp-application-base';
+import { Dialog } from '@microsoft/sp-dialog';
+import { IUserItem } from "./IUserItem";
 import * as strings from 'GtmApplicationCustomizerStrings';
 
-const LOG_SOURCE: string = 'GtmApplicationCustomizer';
+const LOG_SOURCE: string = 'AnalyticsApplicationCustomizer';
+
+var currentURL: string = document.location.href;
+var previousURL: string = "";
 
 /**
  * If your command set uses the ClientSideComponentProperties JSON input,
  * it will be deserialized into the BaseExtension.properties object.
  * You can define an interface to describe it.
  */
-export interface IGtmApplicationCustomizerProperties {
-  /**
-   * Google Tag Manager Tracking ID property
-   */
+export interface IGoogleAnalyticsApplicationCustomizerProperties {
   trackingID: string;
 }
 
 /** A Custom Action which can be run during execution of a Client Side Application */
-export default class GtmApplicationCustomizer extends BaseApplicationCustomizer<IGtmApplicationCustomizerProperties> {
+export default class GoogleAnalyticsApplicationCustomizer
+  extends BaseApplicationCustomizer<IGoogleAnalyticsApplicationCustomizerProperties> {
 
-  /**
-   * Used to determine the current page URL
-   */
   private currentPage = "";
+  private isInitialLoad = true;
 
-  /**
-   * The Google Tag Manager script is already loaded
-   */
-  private isInitialLoad: boolean = true;
-
-  /**
-   * The main event is already loaded
-   */
-  private isEventLoaded: boolean = false;
-
-  /**
-   * Get the current page full URL
-   * @returns Full URL of the current SharePoint page
-   * @private
-   */
   private getFreshCurrentPage(): string {
     return window.location.pathname + window.location.search;
   }
 
-  /**
-   * Update the current page variable
-   * @private
-   */
   private updateCurrentPage(): void {
     this.currentPage = this.getFreshCurrentPage();
   }
-
-  /**
-   * Main event to manage the main GTM script
-   * @private
-   */
+  private async GetUserInfo():Promise<IUserItem> {
+    var userInfo = "";
+    let client = await this.context.msGraphClientFactory.getClient();
+    let response = await client.api('/me').get();
+    return response as  IUserItem;
+  }
+  
   private navigatedEvent(): void {
+
     let trackingID: string = this.properties.trackingID;
     if (!trackingID) {
-      Log.info(LOG_SOURCE,`${strings.MissingID}`);
+      Log.info(LOG_SOURCE, `${strings.MissingID}`);
     } else {
-      Log.info(LOG_SOURCE,`Tracking Site ID: ${trackingID}`);
+
+      const navigatedPage = this.getFreshCurrentPage();
 
       if (this.isInitialLoad) {
-        Log.info(LOG_SOURCE,`Initial load`);
         this.realInitialNavigatedEvent(trackingID);
+        this.updateCurrentPage();
         this.isInitialLoad = false;
+
+      }
+      else if (!this.isInitialLoad && (navigatedPage !== this.currentPage)) {
+        this.realNavigatedEvent(trackingID);
         this.updateCurrentPage();
-        this.isEventLoaded = true;
-      } else {
-        Log.info(LOG_SOURCE,`Partial loading page`);
-        this.updateCurrentPage();
-        this.partialLoadingPageEvent(this.currentPage);
       }
     }
   }
 
-  /**
-   * Google Tag Manager script injection+ custom event function
-   * @param trackingID GTM ID
-   * @private
-   */
-  private realInitialNavigatedEvent(trackingID: string): void {
-    Log.info(LOG_SOURCE,`Tracking full page load...`);
+  private async realInitialNavigatedEvent(trackingID: string) {
+    console.log("Adding GTM full page load...");
 
-    if (!document.getElementById('sp-gtm-script')) {
-      var gtagScript = document.createElement("script");
-      gtagScript.type = "text/javascript";
-      gtagScript.id = "sp-gtm-script";
-      gtagScript.async = true;
-      gtagScript.innerHTML = `
-        <!-- Google Tag Manager -->
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','${trackingID}');
-        <!-- End Google Tag Manager -->
+    var gtmScript = document.createElement("script");
+    gtmScript.type = "text/javascript";
+    gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${trackingID}`;
+    gtmScript.async = true;
+    document.head.appendChild(gtmScript);
 
-        function refreshGTMDatalayer(dl) {
+   var  userInfo:IUserItem = await this.GetUserInfo();
+   console.log("userPrincipalName  = " + userInfo.userPrincipalName);    
+   var nameId = userInfo.userPrincipalName.replace('corpstg1.jmfamily.com', 'JM');
+
+   let dealerCode = '';
+   let dealer = '';
+   //let dealerInfo = document.getElementById('menu-context').children[0].children[0].children[0].innerHTML.trim();
+   let dealerInfo = "SET No:01007 | BILL PENNEY TOYOTA";
+   if(dealerInfo !== "")
+    {
+      dealerCode = dealerInfo.split('|')[0].trim().split(':')[1].trim();
+      //dealer = dealerInfo.split('|')[1].trim();
+
+      eval(`
           window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push(dl);
-        }
-      `;
-      document.head.appendChild(gtagScript);
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config',  '${trackingID}');
+          gtag('userId', '${nameId}');
+          gtag('set_dealer_number', '${dealerCode}');
+          gtag('app_name', 'SharePointOnline');
+        `);
     }
-
-    var gtagBody = document.createElement("noscript");
-    gtagBody.id = "sp-gtm-body";
-    gtagBody.innerHTML = `
-      <!-- Google Tag Manager (noscript) -->
-      <iframe src="https://www.googletagmanager.com/ns.html?id=${trackingID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-      <!-- End Google Tag Manager (noscript) -->`;
-    document.body.appendChild(gtagBody);
+    else
+    {      
+      eval(`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config',  '${trackingID}');
+      gtag('userId', '${nameId}');
+    `);
+    }
   }
 
-  private partialLoadingPageEvent(url: string): void {
-    var old = document.getElementById('sp-gtm-partialEvent');
-    if (old !== undefined && old !== null) {
-      old.remove();
-    }
+  private async realNavigatedEvent(trackingID: string) {
 
-    var codeScript = document.createElement('script');
-    codeScript.type = 'text/javascript';
-    codeScript.id = 'sp-gtm-partialEvent';
-    codeScript.innerHTML = `(function(){ refreshGTMDatalayer({'event':'VirtualPageview','virtualPageURL':'${url}','virtualPageTitle':'${document.title}'})})();`;
-    document.head.appendChild(codeScript);
+    console.log("Tracking partial page load...");
+
+    var  userInfo:IUserItem = await this.GetUserInfo();
+    console.log("userPrincipalName  = " + userInfo.userPrincipalName);    
+    var nameId = userInfo.userPrincipalName.replace('corpstg1.jmfamily.com', 'JM');
+
+    let dealerCode = '';
+    let dealer = '';
+    //let dealerInfo = document.getElementById('menu-context').children[0].children[0].children[0].innerHTML.trim();
+    let dealerInfo = "SET No:01007 | BILL PENNEY TOYOTA";
+
+    if(dealerInfo !== "")
+    {
+      dealerCode = dealerInfo.split('|')[0].trim().split(':')[1].trim();
+      //dealer = dealerInfo.split('|')[1].trim();
+
+      eval(`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config',  '${trackingID}');
+          gtag('userId', '${nameId}');
+          gtag('set_dealer_number', '${dealerCode}');
+          gtag('app_name', 'SharePointOnline');
+        `);
+    }
+    else
+    {      
+      eval(`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config',  '${trackingID}');
+      gtag('userId', '${nameId}');
+    `);
+    }
   }
 
   @override
   public onInit(): Promise<void> {
-    Log.info(LOG_SOURCE,`Initialized Google Analytics`);
 
-    /* This event is triggered when user performed a search from the header of SharePoint */
-    this.context.placeholderProvider.changedEvent.add(this, this.navigatedEvent);
-    /* This event is triggered when user navigate between the pages */
     this.context.application.navigatedEvent.add(this, this.navigatedEvent);
 
     return Promise.resolve();
